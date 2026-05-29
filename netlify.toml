@@ -1,0 +1,13 @@
+# Netlify deploy config, version-controlled so the build is reproducible
+# rather than living only in the dashboard. See ARCHITECTURE.md.
+#
+# `npm run build` triggers the `prebuild` hook first (npm run check:contrast),
+# so a WCAG AAA contrast regression fails the deploy before next build runs.
+# next build then static-exports the site to out/ (output: "export").
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
