@@ -2,81 +2,103 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import {
   ArrowRightIcon,
+  ArrowUpRightIcon,
   GitHubIcon,
   LinkedInIcon,
   MailIcon,
 } from "@/components/icons";
+import ExternalLink from "@/components/ExternalLink";
 import { site, mailtoHref } from "@/lib/site";
 import { getWorkFeed, type WorkItem } from "@/lib/work";
 
 const rowBase =
   "group block -mx-4 rounded-xl px-4 py-7 transition-[transform,background-color] duration-300 ease-[var(--ease-out-quart)] hover:-translate-y-0.5 hover:bg-sea/5 focus-visible:-translate-y-0.5 focus-visible:bg-sea/5";
 
-function WorkRow({ item, index }: { item: WorkItem; index: number }) {
-  const inner = (
-    <>
-      <div className="flex items-baseline justify-between gap-4">
-        <span className="text-sm font-semibold text-sea-ink">
-          {item.kind === "writing" ? "Writing" : "Project"}
-        </span>
-        <span className="text-sm tabular-nums text-ink-2">
-          {new Date(item.date).getFullYear()}
-        </span>
-      </div>
-      <h3 className="mt-1.5 flex items-center gap-2 text-2xl font-bold tracking-tight text-ink transition-colors group-hover:text-sea-ink group-focus-visible:text-sea-ink">
-        {item.title}
-        {item.href && (
-          <ArrowRightIcon className="h-5 w-5 shrink-0 -translate-x-1 text-sea-ink opacity-0 transition-all duration-300 ease-[var(--ease-out-quart)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
-        )}
-      </h3>
-      <p className="mt-2 max-w-[60ch] text-lg leading-relaxed text-ink-2">
-        {item.blurb}
-      </p>
-      {(item.live || item.status) && (
-        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-          {item.live ? (
-            <span className="inline-flex items-center gap-2 font-semibold text-sea-ink">
-              <span className="live-dot inline-flex h-2 w-2 rounded-full bg-sea" />
-              Live
-            </span>
-          ) : (
-            item.status && (
-              <span className="rounded-full bg-surface-2 px-3 py-1 font-medium text-ink-2">
-                {item.status}
-              </span>
-            )
-          )}
-        </div>
-      )}
-    </>
-  );
+const metaLink =
+  "inline-flex items-center gap-1.5 font-semibold text-sea-ink underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-amber";
 
-  let body;
-  if (item.href && item.external) {
-    body = (
-      <a href={item.href} target="_blank" rel="noopener noreferrer" className={rowBase}>
-        {inner}
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
-    );
-  } else if (item.href) {
-    body = (
-      <a href={item.href} className={rowBase}>
-        {inner}
-      </a>
-    );
-  } else {
-    body = <div className="block py-7">{inner}</div>;
-  }
-
+function KindAndYear({ item }: { item: WorkItem }) {
   return (
+    <div className="flex items-baseline justify-between gap-4">
+      <span className="text-sm font-semibold text-sea-ink">
+        {item.kind === "writing" ? "Writing" : "Project"}
+      </span>
+      <span className="text-sm tabular-nums text-ink-2">
+        {new Date(item.date).getFullYear()}
+      </span>
+    </div>
+  );
+}
+
+function WorkRow({ item, index }: { item: WorkItem; index: number }) {
+  const li = (children: React.ReactNode) => (
     <li
       data-reveal
       style={{ "--i": index } as React.CSSProperties}
       className="border-t border-border last:border-b"
     >
-      {body}
+      {children}
     </li>
+  );
+
+  // Writing: the whole row is a single link to the article.
+  if (item.kind === "writing" && item.href) {
+    return li(
+      <a href={item.href} className={rowBase}>
+        <KindAndYear item={item} />
+        <h3 className="mt-1.5 flex items-center gap-2 text-2xl font-bold tracking-tight text-ink transition-colors group-hover:text-sea-ink group-focus-visible:text-sea-ink">
+          {item.title}
+          <ArrowRightIcon className="h-5 w-5 shrink-0 -translate-x-1 text-sea-ink opacity-0 transition-all duration-300 ease-[var(--ease-out-quart)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
+        </h3>
+        <p className="mt-2 max-w-[60ch] text-lg leading-relaxed text-ink-2">
+          {item.blurb}
+        </p>
+      </a>,
+    );
+  }
+
+  // Project: discrete, labeled links so one project can point at several places
+  // (a live site, its source, a write-up) without nesting links. The status pill
+  // is metadata, not a destination.
+  const hasMeta = item.status || item.live || item.source || item.writeup;
+  return li(
+    <div className="py-7">
+      <KindAndYear item={item} />
+      <h3 className="mt-1.5 text-2xl font-bold tracking-tight text-ink">
+        {item.title}
+      </h3>
+      <p className="mt-2 max-w-[60ch] text-lg leading-relaxed text-ink-2">
+        {item.blurb}
+      </p>
+      {hasMeta && (
+        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+          {item.status && (
+            <span className="rounded-full bg-surface-2 px-3 py-1 font-medium text-ink-2">
+              {item.status}
+            </span>
+          )}
+          {item.live && (
+            <ExternalLink href={item.live} className={`${metaLink} gap-2`}>
+              <span className="live-dot inline-flex h-2 w-2 rounded-full bg-sea" />
+              Live
+              <ArrowUpRightIcon className="h-4 w-4" />
+            </ExternalLink>
+          )}
+          {item.source && (
+            <ExternalLink href={item.source} className={metaLink}>
+              Source on GitHub
+              <ArrowUpRightIcon className="h-4 w-4" />
+            </ExternalLink>
+          )}
+          {item.writeup && (
+            <a href={item.writeup} className={metaLink}>
+              Read the write-up
+              <ArrowRightIcon className="h-4 w-4" />
+            </a>
+          )}
+        </div>
+      )}
+    </div>,
   );
 }
 

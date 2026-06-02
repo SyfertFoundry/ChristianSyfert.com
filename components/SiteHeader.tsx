@@ -7,7 +7,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-4 sm:px-8">
         <a
           href="/"
-          className="rounded-md text-lg font-bold tracking-tight text-ink transition-colors hover:text-sea-ink"
+          className="inline-flex min-h-11 items-center rounded-md text-lg font-bold tracking-tight text-ink transition-colors hover:text-sea-ink"
         >
           {site.name}
         </a>
@@ -15,13 +15,13 @@ export default function SiteHeader() {
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
           <a
             href="/articles/"
-            className="hidden rounded-md px-3 py-2 font-medium text-ink-2 transition-colors hover:text-sea-ink sm:inline-block"
+            className="hidden min-h-11 items-center rounded-md px-3 font-medium text-ink-2 transition-colors hover:text-sea-ink sm:inline-flex"
           >
             Writing
           </a>
           <a
             href="/#contact"
-            className="hidden rounded-md px-3 py-2 font-medium text-ink-2 transition-colors hover:text-sea-ink sm:inline-block"
+            className="hidden min-h-11 items-center rounded-md px-3 font-medium text-ink-2 transition-colors hover:text-sea-ink sm:inline-flex"
           >
             Contact
           </a>
@@ -31,7 +31,7 @@ export default function SiteHeader() {
               href={site.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md p-2.5 text-ink-2 transition-colors hover:bg-surface hover:text-sea-ink"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface hover:text-sea-ink"
             >
               <LinkedInIcon className="h-5 w-5" />
               <span className="sr-only">
@@ -44,7 +44,7 @@ export default function SiteHeader() {
               href={site.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md p-2.5 text-ink-2 transition-colors hover:bg-surface hover:text-sea-ink"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface hover:text-sea-ink"
             >
               <GitHubIcon className="h-5 w-5" />
               <span className="sr-only">
@@ -54,7 +54,7 @@ export default function SiteHeader() {
           )}
           <a
             href={mailtoHref}
-            className="ml-1 rounded-lg bg-sea px-4 py-2 font-semibold text-on-sea transition-colors hover:bg-sea-deep"
+            className="ml-1 inline-flex min-h-11 items-center rounded-lg bg-sea px-4 font-semibold text-on-sea transition-colors hover:bg-sea-deep"
           >
             Email
           </a>

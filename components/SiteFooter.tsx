@@ -17,7 +17,7 @@ export default function SiteFooter() {
         <div className="flex items-center gap-1">
           <a
             href={mailtoHref}
-            className="rounded-md p-2.5 text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
           >
             <MailIcon className="h-5 w-5" />
             <span className="sr-only">Email {site.name}</span>
@@ -27,7 +27,7 @@ export default function SiteFooter() {
               href={site.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md p-2.5 text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
             >
               <LinkedInIcon className="h-5 w-5" />
               <span className="sr-only">
@@ -40,7 +40,7 @@ export default function SiteFooter() {
               href={site.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md p-2.5 text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
             >
               <GitHubIcon className="h-5 w-5" />
               <span className="sr-only">

@@ -28,3 +28,9 @@ next-env.d.ts
 /DESIGN.md
 /ARCHITECTURE.md
 /.claude/
+/.agents/
+/.playwright-mcp/
+
+# image artifacts / screenshots (no raster assets ship; icons are inline SVG)
+*.png
+*.jpeg
