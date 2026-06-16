@@ -206,10 +206,10 @@ export default function Home() {
             >
               <a
                 href={mailtoHref}
-                className="inline-flex items-center gap-2.5 rounded-xl bg-amber-bright px-6 py-3.5 text-lg font-bold text-ink shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
+                className="inline-flex max-w-full items-center gap-2.5 rounded-xl bg-amber-bright px-6 py-3.5 text-lg font-bold text-ink shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
               >
-                <MailIcon className="h-5 w-5" />
-                {site.email}
+                <MailIcon className="h-5 w-5 shrink-0" />
+                <span className="min-w-0 break-all">{site.email}</span>
               </a>
               {site.linkedinUrl && (
                 <a
