@@ -30,6 +30,7 @@ next-env.d.ts
 /.claude/
 /.agents/
 /.playwright-mcp/
+/spartanburg-accessibility-brief.md
 
 # image artifacts / screenshots (no raster assets ship; icons are inline SVG)
 *.png
