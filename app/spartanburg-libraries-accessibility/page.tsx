@@ -52,7 +52,7 @@ const contrastFails: {
 const fixExample = `<!-- 1. Page language: one line in the site layout / master page -->
 <html lang="en">                 <!-- currently: <html> with no lang -->
 
-<!-- 2. Heading hierarchy: one h1, then nested levels in order -->
+<!-- 2. Heading hierarchy: one h1, then h2/h3 in order (indented to show the outline) -->
 <h1>Spartanburg County Public Libraries</h1>
   <h2>Browse by Age Group</h2>   <!-- currently an <h5> with nothing above it -->
     <h3>Kids</h3>
@@ -155,15 +155,24 @@ export default function SpartanburgAccessibilityAudit() {
 
       <h2 className={h2}>Fixing this is template work, not a rebuild</h2>
       <p className={p}>
-        The site runs on C# and .NET, so these changes live in the Razor views
-        (<code className="font-mono">.cshtml</code>), master pages
-        (<code className="font-mono">.aspx</code>), or CMS templates. They&rsquo;re
-        edits to the markup that gets generated, not a redesign and not a rebuild:
+        The site runs on Sitecore, a C#/.NET CMS (IIS and ASP.NET underneath, with
+        Sitecore&rsquo;s <code className="font-mono">/-/media/</code> asset URLs all
+        over the markup). So these fixes live in the Sitecore layouts and rendering
+        views (the <code className="font-mono">.cshtml</code> files), edits to the
+        markup the templates generate, not a redesign and not a rebuild:
       </p>
-      <pre className={`${codeBlock} mt-4`}>{fixExample}</pre>
+      <pre
+        className={`${codeBlock} mt-4`}
+        tabIndex={0}
+        role="group"
+        aria-label="Example markup fixes"
+      >
+        {fixExample}
+      </pre>
       <p className={p}>
-        The heading restructure is the biggest piece, but it&rsquo;s structural
-        work in the templates, not a change to how the site looks.
+        The heading restructure is the biggest piece: it&rsquo;s a matter of moving
+        the existing headings to the right levels in the layout views, the same
+        place the other fixes live.
       </p>
 
       <h2 className={h2}>What the audit found</h2>
@@ -176,7 +185,12 @@ export default function SpartanburgAccessibilityAudit() {
         site isn&rsquo;t close. Each failure below is a specific success
         criterion, checkable against the standard listed next to it.
       </p>
-      <div className="mt-6 overflow-x-auto">
+      <div
+        className="mt-6 overflow-x-auto"
+        tabIndex={0}
+        role="region"
+        aria-label="Accessibility findings, scrollable"
+      >
         <table className="w-full border-collapse text-left text-base">
           <caption className="sr-only">
             Accessibility failures found on spartanburglibraries.org, with the
@@ -339,6 +353,8 @@ export default function SpartanburgAccessibilityAudit() {
       <figure className="mt-5">
         <div
           className="overflow-x-auto rounded-lg border border-border bg-surface p-5"
+          tabIndex={0}
+          role="group"
           aria-label="Captured heading outline of the live library homepage"
         >
           <p className="font-mono text-sm font-bold text-ink">
@@ -391,7 +407,12 @@ export default function SpartanburgAccessibilityAudit() {
           <code className="font-mono">role=&quot;kids&quot;</code>, which
           aren&rsquo;t real ARIA roles, so assistive tech doesn&rsquo;t know
           they&rsquo;re tabs. The live markup:
-          <pre className={`${codeBlock} mt-3`}>
+          <pre
+            className={`${codeBlock} mt-3`}
+            tabIndex={0}
+            role="group"
+            aria-label="Live markup: invalid tab roles"
+          >
             {`<a href="#teens" aria-controls="teens" role="teens" data-toggle="tab">Teens</a>`}
           </pre>
         </li>
@@ -400,7 +421,12 @@ export default function SpartanburgAccessibilityAudit() {
           <code className="font-mono">alt</code> attribute, which does nothing on a
           link, and several icon links hold only a glyph, so a screen reader
           announces them as just &ldquo;link.&rdquo;
-          <pre className={`${codeBlock} mt-3`}>
+          <pre
+            className={`${codeBlock} mt-3`}
+            tabIndex={0}
+            role="group"
+            aria-label="Live markup: unnamed links"
+          >
             {`<a href="/" class="logo" alt="Spartanburg County Public Libraries"></a>
 <a href="http://catalog.infodepot.org/..."><span class="bi bi-book"></span></a>`}
           </pre>
