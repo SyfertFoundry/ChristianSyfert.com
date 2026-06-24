@@ -91,7 +91,79 @@ export default function SpartanburgAccessibilityAudit() {
         how it looks but by the structure underneath it, which is the same thing
         the screen reader reads. I tried to use the library&rsquo;s site, ran into
         enough that got in my way, and checked it against the standard. Here is
-        what I found.
+        what I found, and why I&rsquo;m passing it along.
+      </p>
+
+      <h2 className={h2}>Why I&rsquo;m sending this</h2>
+      <p className={p}>
+        I found these by trying to use the site, the way anyone in the county
+        might. I&rsquo;ve applied for {ROLE}, so I&rsquo;ll be upfront that I have
+        a reason to write. But the issues are here either way, and I&rsquo;d
+        rather pass them along than not.
+      </p>
+      <p className={p}>
+        Happy to walk through any of it. You can reach me at{" "}
+        <a href={mailtoHref} className={linkStyle}>
+          {site.email}
+        </a>
+        .
+      </p>
+
+      <h2 className={h2}>Who the site leaves out</h2>
+      <p className={p}>
+        A library is about access, so it&rsquo;s worth being plain about who the
+        current site shuts out. The county has about <strong>328,000</strong>{" "}
+        residents (2020 Census). Conservatively:
+      </p>
+      <ul className="mt-4 space-y-2 text-lg leading-relaxed text-ink">
+        <li>
+          About <strong>15,700</strong> are blind or have serious difficulty
+          seeing (CDC, roughly 4.8 percent). They&rsquo;re blocked outright:
+          headings, labels, and page language are how they get around a site.
+        </li>
+        <li>
+          About <strong>85,000</strong> have a disability of some kind (CDC, about
+          1 in 4 adults), and a lot of them lean on these same fixes.
+        </li>
+        <li>
+          About <strong>59,000</strong> are 65 or older, with rising vision and
+          dexterity needs, and they&rsquo;re among the heaviest library users.
+        </li>
+      </ul>
+      <p className={p}>
+        Not everyone hits every barrier, and these aren&rsquo;t all the same
+        person. But the issues in this audit are the ones screen reader and
+        keyboard users depend on, so something like <strong>10,000 or more
+        residents are directly hindered right now</strong>. Clean structure
+        quietly helps everyone else too: people on phones, search ranking, anyone
+        in a hurry.
+      </p>
+      <p className="mt-4 text-base text-ink-2">
+        Sources:{" "}
+        <ExternalLink href="https://dhds.cdc.gov/" className={linkStyle}>
+          CDC Disability and Health Data System
+        </ExternalLink>{" "}
+        and{" "}
+        <ExternalLink
+          href="https://www.census.gov/quickfacts/spartanburgcountysouthcarolina"
+          className={linkStyle}
+        >
+          U.S. Census QuickFacts (Spartanburg County, SC)
+        </ExternalLink>
+        .
+      </p>
+
+      <h2 className={h2}>Fixing this is template work, not a rebuild</h2>
+      <p className={p}>
+        The site runs on C# and .NET, so these changes live in the Razor views
+        (<code className="font-mono">.cshtml</code>), master pages
+        (<code className="font-mono">.aspx</code>), or CMS templates. They&rsquo;re
+        edits to the markup that gets generated, not a redesign and not a rebuild:
+      </p>
+      <pre className={`${codeBlock} mt-4`}>{fixExample}</pre>
+      <p className={p}>
+        The heading restructure is the biggest piece, but it&rsquo;s structural
+        work in the templates, not a change to how the site looks.
       </p>
 
       <h2 className={h2}>What the audit found</h2>
@@ -217,50 +289,6 @@ export default function SpartanburgAccessibilityAudit() {
         where they have to be fixed.
       </p>
 
-      <h2 className={h2}>Who the site leaves out</h2>
-      <p className={p}>
-        A library is about access, so it&rsquo;s worth being plain about who the
-        current site shuts out. The county has about <strong>328,000</strong>{" "}
-        residents (2020 Census). Conservatively:
-      </p>
-      <ul className="mt-4 space-y-2 text-lg leading-relaxed text-ink">
-        <li>
-          About <strong>15,700</strong> are blind or have serious difficulty
-          seeing (CDC, roughly 4.8 percent). They&rsquo;re blocked outright:
-          headings, labels, and page language are how they get around a site.
-        </li>
-        <li>
-          About <strong>85,000</strong> have a disability of some kind (CDC, about
-          1 in 4 adults), and a lot of them lean on these same fixes.
-        </li>
-        <li>
-          About <strong>59,000</strong> are 65 or older, with rising vision and
-          dexterity needs, and they&rsquo;re among the heaviest library users.
-        </li>
-      </ul>
-      <p className={p}>
-        Not everyone hits every barrier, and these aren&rsquo;t all the same
-        person. But the issues in this audit are the ones screen reader and
-        keyboard users depend on, so something like <strong>10,000 or more
-        residents are directly hindered right now</strong>. Clean structure
-        quietly helps everyone else too: people on phones, search ranking, anyone
-        in a hurry.
-      </p>
-      <p className="mt-4 text-base text-ink-2">
-        Sources:{" "}
-        <ExternalLink href="https://dhds.cdc.gov/" className={linkStyle}>
-          CDC Disability and Health Data System
-        </ExternalLink>{" "}
-        and{" "}
-        <ExternalLink
-          href="https://www.census.gov/quickfacts/spartanburgcountysouthcarolina"
-          className={linkStyle}
-        >
-          U.S. Census QuickFacts (Spartanburg County, SC)
-        </ExternalLink>
-        .
-      </p>
-
       <h2 className={h2}>What&rsquo;s actually broken</h2>
       <p className={p}>
         None of this shows up in the toolbar. It shows up when you read the page
@@ -378,34 +406,6 @@ export default function SpartanburgAccessibilityAudit() {
           </pre>
         </li>
       </ul>
-
-      <h2 className={h2}>Fixing this is template work, not a rebuild</h2>
-      <p className={p}>
-        The site runs on C# and .NET, so these changes live in the Razor views
-        (<code className="font-mono">.cshtml</code>), master pages
-        (<code className="font-mono">.aspx</code>), or CMS templates. They&rsquo;re
-        edits to the markup that gets generated, not a redesign and not a rebuild:
-      </p>
-      <pre className={`${codeBlock} mt-4`}>{fixExample}</pre>
-      <p className={p}>
-        The heading restructure is the biggest piece, but it&rsquo;s structural
-        work in the templates, not a change to how the site looks.
-      </p>
-
-      <h2 className={h2}>Why I&rsquo;m sending this</h2>
-      <p className={p}>
-        I found these by trying to use the site, the way anyone in the county
-        might. I&rsquo;ve applied for {ROLE}, so I&rsquo;ll be upfront that I have
-        a reason to write. But the issues are here either way, and I&rsquo;d
-        rather pass them along than not.
-      </p>
-      <p className={p}>
-        Happy to walk through any of it. You can reach me at{" "}
-        <a href={mailtoHref} className={linkStyle}>
-          {site.email}
-        </a>
-        .
-      </p>
 
       <footer className="mt-20 border-t border-border pt-8 text-base text-ink-2">
         <p>
