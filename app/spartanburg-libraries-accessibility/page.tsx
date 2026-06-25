@@ -113,6 +113,13 @@ export default function SpartanburgAccessibilityAudit() {
         Accessibility audit of spartanburglibraries.org
       </h1>
 
+      <p className="mt-4 text-lg text-ink-2">
+        by{" "}
+        <a href="/" className={linkStyle}>
+          {site.name}
+        </a>
+      </p>
+
       <p className="mt-6 text-xl leading-relaxed text-ink-2">
         I&rsquo;m a Spartanburg County resident, and I&rsquo;m blind, so I use the
         web through a screen reader. That means I don&rsquo;t experience a site by
