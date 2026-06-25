@@ -1,16 +1,44 @@
 import type { Metadata } from "next";
 import { site, mailtoHref } from "@/lib/site";
 import ExternalLink from "@/components/ExternalLink";
+import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 
 // Standalone audit, shared by direct link only. It deliberately does NOT use
 // SiteHeader/SiteFooter: the page sits outside the portfolio so its single <h1>
 // is the report title and the document outline stays clean and demonstrable.
 // noindex/nofollow so it never ranks against the library.
+const auditTitle = "Accessibility audit of spartanburglibraries.org";
+const auditDescription =
+  "An accessibility audit of spartanburglibraries.org: what the Recite toolbar doesn't fix, who the site leaves out, and what fixing it takes.";
+const auditPath = "/spartanburg-libraries-accessibility/";
+const auditImage = {
+  url: "/og/spartanburg-audit.png",
+  width: 1200,
+  height: 630,
+  alt: "Accessibility audit of spartanburglibraries.org: doesn't meet WCAG 2.2 Level A.",
+};
+
+// The share preview is overridden for this page specifically. Without these,
+// Next merges the root layout's openGraph and a shared link unfurls as the home
+// page (name, role, site root) instead of the audit. noindex still holds:
+// it stops search engines, not social unfurls, so the OG card still works.
 export const metadata: Metadata = {
-  title: { absolute: "Accessibility audit of spartanburglibraries.org" },
-  description:
-    "An accessibility audit of spartanburglibraries.org: what the Recite toolbar doesn't fix, who the site leaves out, and what fixing it takes.",
+  title: { absolute: auditTitle },
+  description: auditDescription,
   robots: { index: false, follow: false },
+  openGraph: {
+    title: auditTitle,
+    description: auditDescription,
+    url: auditPath,
+    type: "article",
+    images: [auditImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: auditTitle,
+    description: auditDescription,
+    images: [auditImage],
+  },
 };
 
 // Posting: "Web Services Developer", 40 hours, Headquarters Library
@@ -433,13 +461,86 @@ export default function SpartanburgAccessibilityAudit() {
         </li>
       </ul>
 
-      <footer className="mt-20 border-t border-border pt-8 text-base text-ink-2">
-        <p>
+      {/* The whole audit stays restrained so it reads as evidence, not a pitch.
+          That earns one committed moment: a drenched sea-green close that turns
+          from the report to the person. Its h2 keeps the page outline clean. */}
+      <section
+        aria-labelledby="cta-heading"
+        className="mt-20 rounded-2xl bg-sea-drench px-7 py-10 sm:px-10 sm:py-12"
+      >
+        <h2
+          id="cta-heading"
+          className="text-balance text-[clamp(1.5rem,3.5vw,2rem)] font-bold tracking-tight text-on-sea"
+        >
+          All of this is fixable
+        </h2>
+        <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-on-sea/85">
+          None of it is a rebuild, and I&rsquo;d be glad to walk through any of
+          it. If you want to see what accessibility-first looks like when
+          it&rsquo;s built in from the start instead of bolted on, that&rsquo;s
+          the rest of my site.
+        </p>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <a
+            href={mailtoHref}
+            className="inline-flex h-12 items-center justify-center rounded-lg bg-amber-bright px-6 text-base font-bold text-ink transition-colors hover:bg-amber focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-sea"
+          >
+            Email me
+          </a>
+          <a
+            href="/"
+            className="inline-flex h-12 items-center justify-center rounded-lg border border-on-sea/40 px-6 text-base font-semibold text-on-sea transition-colors hover:bg-on-sea/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-sea"
+          >
+            See how I build{" "}
+            <span aria-hidden className="ml-1">
+              &rarr;
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <footer className="mt-16 flex flex-col gap-5 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-base text-ink-2">
           {site.name},{" "}
           <a href="/" className={`inline-block py-1 ${linkStyle}`}>
             christiansyfert.com
           </a>
         </p>
+        <div className="flex items-center gap-1">
+          <a
+            href={mailtoHref}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+          >
+            <MailIcon className="h-5 w-5" />
+            <span className="sr-only">Email {site.name}</span>
+          </a>
+          {site.linkedinUrl && (
+            <a
+              href={site.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+            >
+              <LinkedInIcon className="h-5 w-5" />
+              <span className="sr-only">
+                {site.name} on LinkedIn (opens in a new tab)
+              </span>
+            </a>
+          )}
+          {site.githubUrl && (
+            <a
+              href={site.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-sea-ink"
+            >
+              <GitHubIcon className="h-5 w-5" />
+              <span className="sr-only">
+                {site.name} on GitHub (opens in a new tab)
+              </span>
+            </a>
+          )}
+        </div>
       </footer>
     </main>
   );

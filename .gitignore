@@ -35,3 +35,6 @@ next-env.d.ts
 # image artifacts / screenshots (no raster assets ship; icons are inline SVG)
 *.png
 *.jpeg
+# exception: deliberate social-share (Open Graph) images do ship
+!/public/og/
+!/public/og/*.png
